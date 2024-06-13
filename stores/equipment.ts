@@ -4,12 +4,12 @@ import type { Tables } from '~/types/supabase'
 export const useEquipmentStore = defineStore({
   id: 'myEquipmentStore',
   state: () => ({ 
-    equipmentList: [] as Array<Tables<'equipment'>>,
+    dataList: [] as Array<Tables<'equipment'>>,
     pending: false
   }),
   actions: {
-    async fetchEquipment(){
-      if(this.equipmentList.length  <= 0){
+    async fetchTable(){
+      if(this.dataList.length  <= 0){
         const supabase = useSupabaseApi()
         this.pending = true
         const {data,error} = await supabase.from('equipment').select('*')
@@ -18,7 +18,7 @@ export const useEquipmentStore = defineStore({
           DBErrorMessage(error)
         }
         else {
-          this.equipmentList = data
+          this.dataList = data
         }
       }
       
