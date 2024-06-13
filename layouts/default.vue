@@ -1,7 +1,10 @@
 <template>
   <div class="w-screen h-screen flex flex-row">
     <NavSideBar/>
-    <slot />
+    <UContainer class="w-full p-4">
+      <slot />
+    </UContainer>
+    
     <UNotifications/>
   </div>
 </template>

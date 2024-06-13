@@ -11,8 +11,12 @@
 <script lang="ts" setup>
 const links = [{
   to: '/',
-  label: 'Index',
-  icon: 'i-ph-building'
+  label: 'Statistic',
+  icon: 'i-ph-chart-bar'
+},{
+  to: '/exercises',
+  label: 'Exercises',
+  icon: 'i-ph-barbell'
 },{
   to: '/profile',
   label: 'Profile',
