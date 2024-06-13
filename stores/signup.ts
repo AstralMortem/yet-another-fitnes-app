@@ -43,7 +43,7 @@ export const useSignupStore = defineStore({
         })
         this.pending = false
         if(error){
-          ErrorMessage(error.name, error.message)
+          AuthErrorMessage(error)
         }else{
           navigateTo('/login')
           SuccessMessage("Confirm your email", `Please confirm your email ${this.userEmail}`)
