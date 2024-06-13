@@ -5,23 +5,20 @@ export const useEquipmentStore = defineStore({
   id: 'myEquipmentStore',
   state: () => ({ 
     dataList: [] as Array<Tables<'equipment'>>,
+    selected: Number(-1) || undefined,
     pending: false
   }),
   actions: {
     async fetchTable(){
-      if(this.dataList.length  <= 0){
-        const supabase = useSupabaseApi()
+      if(this.dataList.length  == 0){
         this.pending = true
-        const {data,error} = await supabase.from('equipment').select('*')
+        const data = await SimpleFetch('equipment')
         this.pending = false
-        if(error){
-          DBErrorMessage(error)
-        }
-        else {
-          this.dataList = data
-        }
+        this.dataList = data as Array<Tables<'equipment'>>
       }
-      
     }
+  },
+  getters:{
+    selectedItem: (state) => state.selected? state.dataList.find(x => x.id == state.selected) : undefined
   }
 })

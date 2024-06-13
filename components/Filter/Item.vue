@@ -6,22 +6,23 @@
       <img :src="$props.data.image ? $props.data.image : '/img/image_not_found.png'" class="w-14 h-14 rounded-lg ring-4 ring-primary" />
       <p class="text-2xl">{{ $props.data.title }}</p>
     </div>
-    <UIcon name="i-ph-check-circle-fill" class="text-4xl" v-if="model == $props.data.id"/>
-    
+    <UIcon name="i-ph-check-circle-fill" class="text-4xl" v-if="model== $props.data.id"/>
   </div>
 </template>
 
 <script lang="ts" setup>
+import type { Filter } from '~/types/filter';
 
-const model = defineModel()
 defineEmits(['close'])
 
-defineProps({
+const props = defineProps({
   data:{
-    type: {} as PropType<{title: string, image:string | null, id: number}>,
+    type: {} as PropType<Filter>,
     required: true
-  }
+  },
 })
+
+const model = defineModel()
 </script>
 
 <style>
