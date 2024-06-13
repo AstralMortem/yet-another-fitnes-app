@@ -24,7 +24,9 @@ const {userAge} = storeToRefs(useSignupStore())
 const nextPage = () => {
   navigateTo('/signup/gender')
 }
-
+definePageMeta({
+  layout: 'auth'
+})
 </script>
 
 <style>

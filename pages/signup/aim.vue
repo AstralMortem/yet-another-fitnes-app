@@ -37,6 +37,10 @@ const {userTrainingAim, pending} = storeToRefs(signupStore)
 const signup = async () => {
   await signupStore.signupUser()
 }
+
+definePageMeta({
+  layout: 'auth'
+})
 </script>
 
 <style>

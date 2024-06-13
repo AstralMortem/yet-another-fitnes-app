@@ -24,6 +24,10 @@ const nextPage = () => {
   navigateTo('/signup/training')
 }
 
+definePageMeta({
+  layout: 'auth'
+})
+
 </script>
 
 <style>

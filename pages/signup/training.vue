@@ -24,6 +24,9 @@ const nextPage = () => {
   navigateTo('/signup/aim')
 }
 
+definePageMeta({
+  layout: 'auth'
+})
 </script>
 
 <style>

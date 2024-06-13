@@ -67,6 +67,10 @@ const signup = async (e:FormSubmitEvent<Schema>) => {
   }
 }
 
+definePageMeta({
+  layout: 'auth'
+})
+
 </script>
 
 <style>

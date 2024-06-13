@@ -5,7 +5,7 @@
       <UILogo/>
       <main class="flex flex-col gap-6">
         <div class="flex flex-col justify-center items-center space-y-6">
-          <UForm :state="state" :validate="validate" class="space-y-6 min-w-[300px]" ref="form" @submit="login">
+          <UForm :state="state" :schema="schema" class="space-y-6 min-w-[300px]" ref="form" @submit="login">
             <UFormGroup name="email" size="xl">
               <UInput v-model="state.email" placeholder="user@example.com" icon="i-ph-user" />
             </UFormGroup>
@@ -17,7 +17,7 @@
             <UCheckbox label="Remember me" :ui="{label:'text-md'}"/>
             <ULink class="text-slate-500 font-bold hover:underline">Forgot Password?</ULink>
           </div>
-          <UButton label="Log in" block size="xl" @click="form.submit()"/>
+          <UButton label="Log in" block size="xl" @click="form.submit()" :loading="pending"/>
         </div>
         <UDivider label="OR" />
         <div class="flex flex-col justify-center items-center gap-4">
@@ -38,8 +38,10 @@
 </template>
 
 <script lang="ts" setup>
+import {z} from 'zod'
 import type { FormError, FormSubmitEvent } from '#ui/types'
 const profileStore = useProfileStore()
+const {pending} = storeToRefs(profileStore)
 
 const state = ref({
   email: "",
@@ -48,16 +50,31 @@ const state = ref({
 
 const form = ref()
 
-const validate = (state: any): FormError[] => {
-  const errors = []
-  if (!state.email) errors.push({ path: 'email', message: 'Required' })
-  if (!state.password) errors.push({ path: 'password', message: 'Required' })
-  return errors
+
+
+const schema = z.object({
+  email: z.string().email("Invalid email"),
+  password: z.string().min(8, "Must be at least 8 characters")
+})
+
+type Schema = z.output<typeof schema>
+
+const login = async (e:FormSubmitEvent<Schema>) => {
+  const error = await profileStore.loginUser(e.data.email, e.data.password)
+  if(error){
+    form.value.clear()
+    form.value.setErrors([{
+      message: error.message,
+      path: 'email'
+    }])
+  }else{
+    navigateTo('/')
+  }
 }
 
-const login = async (e:FormSubmitEvent<typeof state.value>) => {
-  await profileStore.loginUser(e.data.email, e.data.password)
-}
+definePageMeta({
+  layout: 'auth'
+})
 
 </script>
 

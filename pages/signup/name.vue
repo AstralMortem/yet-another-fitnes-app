@@ -25,6 +25,9 @@ const nextPage = () => {
   navigateTo('/signup/age')
 }
 
+definePageMeta({
+  layout: 'auth'
+})
 </script>
 
 <style>
