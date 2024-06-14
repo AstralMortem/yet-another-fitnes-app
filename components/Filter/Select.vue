@@ -1,17 +1,17 @@
 <template>
   <div>
 
-    <div class="flex flex-row justify-between items-center p-4 rounded-lg  hover:bg-opacity-50 w-full cursor-pointer"
+    <div class="flex flex-row justify-between items-center p-2 md:p-4 rounded-lg  hover:bg-opacity-50 w-full cursor-pointer"
       :class="[props.store.selectedItem ? 'bg-primary-500' : 'bg-slate-800']">
       <div class="flex flex-row gap-4 justify-between items-center w-full h-full" v-if="props.store.selectedItem">
         <UButton variant="ghost" icon="i-ph-x" color="gray" @click="selected = undefined" />
         <div class="flex flex-1 w-full h-full" @click="showModal = true">
-          <p class="text-2xl" >{{ props.store.selectedItem.title}}</p>
+          <p class="text-lg md:text-2xl" >{{ props.store.selectedItem.title}}</p>
         </div> 
       </div>
       <div class="flex flex-row gap-4 justify-between items-center w-full h-full" @click="showModal = true" v-else>
-        <UIcon class="text-2xl" :name="$props.icon"/>
-        <p class="text-2xl">{{ $props.title }}</p>
+        <UIcon class="text-lg md:text-2xl" :name="$props.icon"/>
+        <p class="text-lg md:text-2xl">{{ $props.title }}</p>
       </div>
     </div>
 
