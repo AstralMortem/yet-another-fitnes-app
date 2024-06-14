@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col w-full h-full gap-6">
-    <div class="flex flex-col-reverse gap-6 lg:gap-0 lg:flex-row justify-between items-center">
-      <div class="flex flex-row gap-6 lg:justify-start items-center justify-between w-full">
+    <div class="flex flex-col-reverse gap-6 lg:gap-0 lg:flex-row justify-between items-start lg:items-center">
+      <div class="flex flex-row gap-6 justify-start items-center">
         <FilterSelect :store="equipmentStore" :store-fetcher="equipmentStore.fetchTable" title="Equipment"
           icon="i-ph-barbell" />
         <FilterSelect :store="musclesStore" :store-fetcher="musclesStore.fetchTable" title="Muscles"
@@ -11,12 +11,7 @@
       </div>
       <div class="flex flex-row gap-4 lg:justify-end items-center w-full">
         <UButton icon="i-ph-plus" label="Add exercise" size="xl" />
-        <UInput v-model="search" placeholder="Search exercise" size="xl" icon="i-ph-magnifying-glass" class="w-full lg:w-[400px]"
-          :ui="{
-            size: {
-              xl: 'lg:text-xl lg:h-16'
-            }
-          }" />
+        <UInput v-model="search" placeholder="Search exercise" size="xl" icon="i-ph-magnifying-glass" class="w-full lg:w-[400px]" />
         <!-- <UButton icon="i-ph-star" size="xl" variant="soft"/> deprecated-->
       </div>
     </div>
