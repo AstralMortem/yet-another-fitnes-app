@@ -12,7 +12,7 @@
           xl: 'text-xl h-16'
         }
       }"/>
-      <UButton icon="i-ph-star" size="xl" variant="soft"/>
+      <!-- <UButton icon="i-ph-star" size="xl" variant="soft"/> deprecated-->
     </div>
     </div>
     

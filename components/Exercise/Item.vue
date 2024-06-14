@@ -17,7 +17,7 @@
         </div>
       </div>
     </NuxtLink>
-    <UButton icon="i-ph-star"/>
+    <!-- <UButton icon="i-ph-star"/> deprecated--> 
   </div>
 </template>
 
