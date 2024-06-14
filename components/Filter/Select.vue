@@ -1,13 +1,21 @@
 <template>
   <div>
+
     <div class="flex flex-row justify-between items-center p-4 rounded-lg  hover:bg-opacity-50 w-full cursor-pointer"
       :class="[props.store.selectedItem ? 'bg-primary-500' : 'bg-slate-800']">
-      <div class="flex flex-row gap-4 justify-between items-center w-full h-full">
-        <UButton variant="ghost" icon="i-ph-x" v-if="props.store.selectedItem" color="gray" @click="selected = undefined; showModal = false" />
-        <UIcon class="text-2xl" :name="$props.icon" v-else @click="showModal = true" />
-        <p class="text-2xl" @click="showModal = true">{{ props.store.selectedItem ? props.store.selectedItem.title : $props.title }}</p>
+      <div class="flex flex-row gap-4 justify-between items-center w-full h-full" v-if="props.store.selectedItem">
+        <UButton variant="ghost" icon="i-ph-x" color="gray" @click="selected = undefined" />
+        <div class="flex flex-1 w-full h-full" @click="showModal = true">
+          <p class="text-2xl" >{{ props.store.selectedItem.title}}</p>
+        </div> 
+      </div>
+      <div class="flex flex-row gap-4 justify-between items-center w-full h-full" @click="showModal = true" v-else>
+        <UIcon class="text-2xl" :name="$props.icon"/>
+        <p class="text-2xl">{{ $props.title }}</p>
       </div>
     </div>
+
+
     <UModal v-model="showModal">
       <UILoader v-if="pending" />
       <div class="flex flex-col gap-4 w-full justify-center items-center p-4" v-else>
