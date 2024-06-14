@@ -3,3 +3,8 @@ export interface Filter{
     image: string | null
     title: string
 }
+
+export interface EnumObject{
+    id: number
+    title: string
+}
