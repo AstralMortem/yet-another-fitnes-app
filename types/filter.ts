@@ -7,5 +7,6 @@ export interface Filter{
 export interface EnumObject{
     id: number
     title: string
+    label: string
 }
 

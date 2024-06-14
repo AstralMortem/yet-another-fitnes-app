@@ -13,6 +13,7 @@ export const useExerciseStore = defineStore({
   actions: {
     async fetchTable(filter?:ExerciseFilter, reset=false){
       const supabase = useSupabaseApi()
+      const profile = useProfileStore()
       if (reset) {
         this.page = 1;
         this.dataList = [] as Array<ExerciseSelect>,
@@ -20,11 +21,15 @@ export const useExerciseStore = defineStore({
       }
 
       if (this.reachedEnd || this.pending) return;
-      let statement = supabase.from('exercise').select('id, image, title, level, type, description, muscles(id, title), equipment(id)').eq('is_active', true).eq('is_public', true)
+      let statement = supabase.from('exercise').select('id, image, title, level, type, description, muscles(id, title), equipment(id)').eq('is_active', true)
+      if(profile.isAuthenticated){
+        statement.or(`is_public.eq.true,author_id.eq.${profile.userProfile.id}`)
+      }
+      
 
       if(filter){
         if(filter.exerciseTypeFilter){
-          statement.eq('type', filter.exerciseTypeFilter.title)
+          statement.eq('type', filter.exerciseTypeFilter.label)
         }
         if(filter.muscleFilter){
           const {data:q} = await supabase.rpc('filter_exercise_by_muscles', {muscles_id: filter.muscleFilter.id})

@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col w-full h-full gap-6">
     <div class="flex flex-col-reverse gap-6 lg:gap-0 lg:flex-row justify-between items-start lg:items-center">
-      <div class="flex flex-row gap-6 justify-start items-center">
+      <div class="flex flex-row gap-6 justify-start items-center flex-wrap md:flex-nowrap">
         <FilterSelect :store="equipmentStore" :store-fetcher="equipmentStore.fetchTable" title="Equipment"
           icon="i-ph-barbell" />
         <FilterSelect :store="musclesStore" :store-fetcher="musclesStore.fetchTable" title="Muscles"
@@ -10,18 +10,20 @@
           icon="i-ph-person-simple-run" />
       </div>
       <div class="flex flex-row gap-4 lg:justify-end items-center w-full">
-        <UButton icon="i-ph-plus" label="Add exercise" size="xl" />
+        <UButton icon="i-ph-plus" label="Add exercise" size="xl" @click="showSlideover = true"/>
         <UInput v-model="search" placeholder="Search exercise" size="xl" icon="i-ph-magnifying-glass" class="w-full lg:w-[400px]" />
         <!-- <UButton icon="i-ph-star" size="xl" variant="soft"/> deprecated-->
       </div>
     </div>
 
     <div class="flex flex-col gap-2 w-full overflow-y-auto flex-1">
-
       <ExerciseItem :data="exercise" v-for="exercise in dataList" />
       <ExerciseNoItem v-if="reachedEnd" />
       <UILoader v-if="pending && !reachedEnd" />
     </div>
+
+    
+    <ExerciseAddForm v-model="showSlideover"/>
   </div>
 
 </template>
@@ -47,6 +49,7 @@ const filtered = computed<ExerciseFilter>(() => {
   }
 })
 
+const showSlideover = ref(false)
 
 
 

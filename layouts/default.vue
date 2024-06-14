@@ -10,6 +10,16 @@
 </template>
 
 <script lang="ts" setup>
+const profile = useProfileStore()
+const supabaseUser = useSupabaseUser()
+
+onMounted(async ()=>{
+  if(supabaseUser.value && !profile.isAuthenticated){ //check user profile evry page update
+  await profile.fetchProfile(supabaseUser.value.id)
+}
+})
+
+
 
 </script>
 

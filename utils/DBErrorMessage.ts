@@ -8,7 +8,7 @@ export default (error:PostgrestError) => {
     icon: "i-ph-warning-circle",
     actions:[
       {
-        to: `/error/{error.code}`,
+        to: `https://postgrest.org/en/v12/references/errors.html#:~:text=offsets%20are%20used.-,${error.code},-400`,
         label: "Details"
       }
     ]

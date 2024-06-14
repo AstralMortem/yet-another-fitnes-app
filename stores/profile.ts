@@ -27,7 +27,8 @@ export const useProfileStore = defineStore({
     },
     async fetchProfile(userId:string){
       const supabase = useSupabaseApi()
-      const {data,error} = await supabase.from('profile').select('*').eq('id',userId).limit(1).single()
+      
+      const {data,error} = await supabase.from('profile').select('*').eq('id',userId).single()
       if(error){
         DBErrorMessage(error)
       }else{
@@ -36,7 +37,7 @@ export const useProfileStore = defineStore({
     }
   },
   getters:{
-    isAuthenticated: (state) => !!state.userProfile,
+    isAuthenticated: (state) => !state.userProfile,
     isSuperUser: (state) => !!state.userProfile.is_superuser
   }
 })
