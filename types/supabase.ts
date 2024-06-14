@@ -359,7 +359,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      filter_exercise_by_equipment: {
+        Args: {
+          equip_id: number
+        }
+        Returns: string[]
+      }
+      filter_exercise_by_muscles: {
+        Args: {
+          muscles_id: number
+        }
+        Returns: string[]
+      }
     }
     Enums: {
       ExerciseTypeEnum:
@@ -369,8 +380,10 @@ export type Database = {
         | "cardio_duration"
         | "cardio_lenght"
         | "stretch"
+      genderenum: "male" | "female"
       GenderEnum: "male" | "female"
       MuscleTypeEnum: "main" | "secondary"
+      trainingaimenum: "flesh" | "fit" | "lose"
       TrainingAimEnum: "flesh" | "fit" | "lose"
     }
     CompositeTypes: {

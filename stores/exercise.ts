@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { ExerciseSelect } from '~/types/exercise'
+import type { ExerciseFilter, ExerciseSelect } from '~/types/exercise'
 
 export const useExerciseStore = defineStore({
   id: 'myExerciseStore',
@@ -11,11 +11,42 @@ export const useExerciseStore = defineStore({
     reachedEnd: false
   }),
   actions: {
-    async fetchTable(){
+    async fetchTable(filter?:ExerciseFilter, reset=false){
       const supabase = useSupabaseApi()
+      if (reset) {
+        this.page = 1;
+        this.dataList = [] as Array<ExerciseSelect>,
+        this.reachedEnd = false;
+      }
+
       if (this.reachedEnd || this.pending) return;
+      let statement = supabase.from('exercise').select('id, image, title, level, type, description, muscles(id, title), equipment(id)').eq('is_active', true).eq('is_public', true)
+
+      if(filter){
+        if(filter.exerciseTypeFilter){
+          statement.eq('type', filter.exerciseTypeFilter.title)
+        }
+        if(filter.muscleFilter){
+          const {data:q} = await supabase.rpc('filter_exercise_by_muscles', {muscles_id: filter.muscleFilter.id})
+          if(q){
+            statement.in('id', q)
+          }
+        }
+        if(filter.equipmentFilter){
+          const {data:q} = await supabase.rpc('filter_exercise_by_equipment', {equip_id: filter.equipmentFilter.id})
+          if(q){
+            statement.in('id', q)
+          }
+        }
+        if(filter.searchFilter){
+          statement.ilike('title', `%${filter.searchFilter}%`)
+        }
+      }
+
       this.pending = true
-      const {data,error} = await supabase.from('exercise').select('id, image, title, level,description, muscles(id, title)').eq('is_active', true).eq('is_public', true).range((this.page-1)*this.limit, this.page*this.limit)
+      const {data,error} = await statement.range((this.page-1)*this.limit, this.page*this.limit)
+      this.pending = false
+      
       if(error){
         DBErrorMessage(error)
       }else{
@@ -25,6 +56,6 @@ export const useExerciseStore = defineStore({
         this.dataList.push(...data)
         this.page++
       }
-    }
+    },
   }
 })

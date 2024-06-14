@@ -2,9 +2,9 @@
   <div class="flex flex-col w-full h-full gap-6">
     <div class="flex flex-row justify-between items-center">
       <div class="flex flex-row gap-6">
-      <FilterSelect v-model="equipment" :store="equipmentStore" :store-fetcher="equipmentStore.fetchTable" title="Equipment" icon="i-ph-barbell" />
-      <FilterSelect v-model="muscles" :store="musclesStore" :store-fetcher="musclesStore.fetchTable" title="Muscles" icon="i-ph-smiley" />
-      <FilterSelect v-model="exerciseType" :store="exerciseTypeStore" :store-fetcher="exerciseTypeStore.fetchTable" title="Type" icon="i-ph-person-simple-run" />
+      <FilterSelect :store="equipmentStore" :store-fetcher="equipmentStore.fetchTable" title="Equipment" icon="i-ph-barbell" />
+      <FilterSelect :store="musclesStore" :store-fetcher="musclesStore.fetchTable" title="Muscles" icon="i-ph-smiley" />
+      <FilterSelect :store="exerciseTypeStore" :store-fetcher="exerciseTypeStore.fetchTable" title="Type" icon="i-ph-person-simple-run" />
     </div>
     <div class="flex flex-row gap-4 justify-center items-center">
       <UInput v-model="search" placeholder="Search exercise" size="xl" icon="i-ph-magnifying-glass" class="w-[400px]" :ui="{
@@ -19,6 +19,7 @@
     <div class="flex flex-col gap-2 w-full h-full overflow-y-auto flex-1">
       
       <ExerciseItem :data="exercise" v-for="exercise in dataList"/>
+      <ExerciseNoItem v-if="reachedEnd"/>
       <UILoader v-if="pending && !reachedEnd"/>
     </div>
   </div>
@@ -26,8 +27,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type EnumObject } from '~/types/filter';
-import { type Tables } from '~/types/supabase';
+import { type ExerciseFilter } from '~/types/exercise';
 
 const exerciseStore = useExerciseStore()
 const {dataList, pending, reachedEnd} = storeToRefs(exerciseStore)
@@ -36,17 +36,35 @@ const equipmentStore = useEquipmentStore()
 const musclesStore = useMusclesStore()
 const exerciseTypeStore = useExerciseTypeStore()
 
-
-const equipment = ref<Tables<'equipment'> | undefined>(equipmentStore.selectedItem)
-const muscles = ref<Tables<'muscles'>| undefined>(musclesStore.selectedItem)
-const exerciseType =ref<EnumObject| undefined>(exerciseTypeStore.selectedItem)
 const search = ref('')
 
+const filtered = computed<ExerciseFilter>(()=>{
+  return {
+    'equipmentFilter': equipmentStore.selectedItem,
+    'muscleFilter': musclesStore.selectedItem,
+    'exerciseTypeFilter': exerciseTypeStore.selectedItem,
+    'searchFilter': search.value
+  }
+})
+
+
+
+
+
+watch([
+  storeToRefs(equipmentStore).selectedItem,
+  storeToRefs(musclesStore).selectedItem,
+  storeToRefs(exerciseTypeStore).selectedItem,
+  search
+  ],async ()=>{
+  
+  await exerciseStore.fetchTable(filtered.value, true)
+})
 
 const handleScroll = () => {
   const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight
   if (window.scrollY >= scrollableHeight - 100) {
-    exerciseStore.fetchTable()
+    exerciseStore.fetchTable(filtered.value)
   }
 }
 

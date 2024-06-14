@@ -8,3 +8,4 @@ export interface EnumObject{
     id: number
     title: string
 }
+
