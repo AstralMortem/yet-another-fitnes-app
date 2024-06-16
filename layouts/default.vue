@@ -25,4 +25,23 @@ onMounted(async ()=>{
 
 <style>
 
+::-webkit-scrollbar {
+  @apply w-1 rounded-lg
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-primary-300 opacity-50 rounded-lg
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-primary-500 rounded-lg
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary-800
+}
+
 </style>

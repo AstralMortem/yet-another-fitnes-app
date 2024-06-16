@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div class="flex flex-col gap-2 w-full overflow-y-auto flex-1">
+    <div class="flex flex-col gap-2 w-full overflow-y-auto flex-1 px-1">
       <ExerciseItem :data="exercise" v-for="exercise in dataList" />
       <ExerciseNoItem v-if="reachedEnd" />
       <UILoader v-if="pending && !reachedEnd" />

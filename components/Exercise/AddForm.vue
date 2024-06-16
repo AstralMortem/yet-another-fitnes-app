@@ -7,7 +7,7 @@
         <p class="text-2xl">Add new Exercise</p>
       </div>
     </template>
-    <div class="flex h-full flex-col p-2">
+    <div class="flex h-full flex-col p-2 overflow-y-auto">
       <UForm :state="state" class="space-y-4 h-full" ref="form" @submit="insertExercise" :schema="schema">
         <UFormGroup name="image">
           <div class="flex flex-col gap-2">
