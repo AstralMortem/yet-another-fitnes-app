@@ -6,5 +6,6 @@ export default (enumName:keyof PublicSchema['Enums']) => {
     case 'GenderEnum': return ['male', 'female']
     case 'MuscleTypeEnum': return ["main" ,"secondary"]
     case 'TrainingAimEnum': return ["flesh", "fit", "lose"]
+    default: return [] as string[]
   }
 }

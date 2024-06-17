@@ -1,5 +1,5 @@
 import type { EnumObject } from "./filter"
-import type { Tables } from "./supabase"
+import type { Tables, TablesInsert } from "./supabase"
 
 export interface ExerciseSelect{
     id: string
@@ -15,4 +15,9 @@ export interface ExerciseFilter{
     muscleFilter: Tables<'muscles'> | undefined
     exerciseTypeFilter: EnumObject | undefined
     searchFilter: string
+}
+
+export interface ExerciseInsert extends TablesInsert<'exercise'>{
+    equipments?: number[],
+    muscles?: TablesInsert<'muscle_excercise'>[]
 }
