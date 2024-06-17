@@ -144,12 +144,12 @@ const insertEquipments = async (equipmentArr: number[] | undefined, exerciseId: 
 
 }
 
-const insertMuscles = async (musclesArr: TablesInsert<'muscle_excercise'>[] | undefined, exerciseId: string) => {
+const insertMuscles = async (musclesArr: TablesInsert<'muscle_exercise'>[] | undefined, exerciseId: string) => {
   if (musclesArr) {
     musclesArr.forEach((x) =>{
       x.exercise_id = exerciseId
     })
-    const { data, error } = await supabase.from('muscle_excercise').insert(musclesArr)
+    const { data, error } = await supabase.from('muscle_exercise').insert(musclesArr)
     if (error) {
       DBErrorMessage(error)
     }

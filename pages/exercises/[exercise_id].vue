@@ -135,6 +135,8 @@ function openDeleteModal (id:string, title: string){
         'id': id,
         'tableName': 'exercise',
         'title': title,
+        'bucket': 'exercises',
+        'photoPath':exercise.value?.image?exercise.value.image:undefined,
         onClose() {
             modal.close()
         },
