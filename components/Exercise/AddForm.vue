@@ -78,10 +78,6 @@ const state = ref<ExerciseInsert>({
   type: 'strenght_weight',
 })
 
-watch(state, ()=>{
-  console.log(state.value)
-},{deep:true})
-
 const schema = z.object({
   title: z.string().min(3, 'Must be at least 3 characters'),
   level: z.number().min(1).max(5),
@@ -161,7 +157,6 @@ const insertMuscles = async (musclesArr: TablesInsert<'muscle_excercise'>[] | un
 
 const insertExercise = async (event: FormSubmitEvent<Schema>) => {
   const formState = state.value
-  console.log(formState)
   if (image.value) {
     const imagePath = await uploadImage(image.value, state.value.is_public)
     if (imagePath) {

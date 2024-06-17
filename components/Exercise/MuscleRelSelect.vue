@@ -20,7 +20,7 @@
             <div class="flex flex-col gap-1 justify-start items-center">
               <p class="text-sm">Procent</p>
               <div class="flex flex-row gap-1 justify-start items-center">
-                <UIRoundedProgress v-model="state[idx].procent" :editable="true" :blocked-value="calcBlockedValue"/>
+                <UIRoundedProgress :model-value="state[idx].procent" @update:model-value="debounceCalcProgress($event,idx)" :editable="true"/>
               </div>             
             </div>
           </div>
@@ -33,6 +33,7 @@
 
 <script lang="ts" setup>
 import { type TablesInsert } from '~/types/supabase';
+import { useDebounceFn } from '@vueuse/core'
 
 
 const showModal = ref(false)
@@ -46,15 +47,22 @@ const state = ref<TablesInsert<'muscle_excercise'>[]>([])
 
 
 const getTitle = (muscle_id: number) => dataList.value.find(x => x.id == muscle_id)?.title
-const calcBlockedValue = computed(() => {
-  let val = 0
-  state.value.forEach(x => {
+
+const calcProgress = (value: number, idx: number) =>{
+  let allValue = 0
+  state.value.forEach(x =>{
     if(x.procent && x.procent > 0){
-      val += x.procent
+      allValue += x.procent
     }
   })
-  return 100 - val
-})
+  if((allValue + value) > 100){
+    state.value[idx].procent = 100 - allValue
+  }else{
+    state.value[idx].procent = value
+  }
+}  
+
+const debounceCalcProgress = useDebounceFn((value: number, idx: number)=>calcProgress(value, idx),300)
 
 watch(state, ()=>{
   const values = state.value.filter((x) => x.procent && x.procent > 0)
