@@ -1,14 +1,16 @@
 <template>
   <img :src="path" 
-  class="rounded-lg ring-4 ring-primary" 
+  class="rounded-lg ring-4"
   :style="{
     width: `${$props.width}px`,
-    height: `${$props.height}px`
+    height: `${$props.height}px`,
+    '--tw-ring-color':$props.ringColor
   }" />
 </template>
 
-<script lang="ts" setup>
 
+<script lang="ts" setup>
+import { theme } from '#tailwind-config';
 
 const props = defineProps({
   src:{
@@ -24,6 +26,9 @@ const props = defineProps({
     default: 96
   },
   bucketName:{
+    type: String
+  },
+  ringColor:{
     type: String
   }
 })

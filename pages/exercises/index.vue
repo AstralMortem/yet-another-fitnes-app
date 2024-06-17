@@ -60,7 +60,6 @@ watch([
   storeToRefs(exerciseTypeStore).selectedItem,
   search
 ], async () => {
-
   await exerciseStore.fetchTable(filtered.value, true)
 })
 

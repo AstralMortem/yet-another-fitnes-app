@@ -3,7 +3,8 @@
   @click="model=$props.data.id; $emit('close')" 
   :class="[model == $props.data.id?'text-primary-500':'text-white']">
     <div class="flex flex-row gap-4 items-center">
-      <img :src="$props.data.image ? $props.data.image : '/img/image_not_found.png'" class="w-14 h-14 rounded-lg ring-4 ring-primary" />
+      <UIImage :src="$props.data.image" :width="56" :height="56" v-if="$props.data.image"/>
+      <UIcon v-if="$props.data.icon" :name="$props.data.icon" class="text-2xl"/>
       <p class="text-xl md:text-2xl">{{ $props.data.title }}</p>
     </div>
     <UIcon name="i-ph-check-circle-fill" class="text-2xl md:text-4xl" v-if="model== $props.data.id"/>

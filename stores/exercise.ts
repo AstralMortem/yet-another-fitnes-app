@@ -21,12 +21,10 @@ export const useExerciseStore = defineStore({
       }
 
       if (this.reachedEnd || this.pending) return;
-      let statement = supabase.from('exercise').select('id, image, title, level, type, description, muscles(id, title), equipment(id)').eq('is_active', true)
+      let statement = supabase.from('exercise').select('*, muscles(id, title), equipment(id)').eq('is_active', true)
       if(profile.isAuthenticated){
         statement.or(`is_public.eq.true,author_id.eq.${profile.userProfile.id}`)
       }
-      
-
       if(filter){
         if(filter.exerciseTypeFilter){
           statement.eq('type', filter.exerciseTypeFilter.label)

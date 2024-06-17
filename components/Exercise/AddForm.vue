@@ -110,6 +110,7 @@ const uploadImage = async (file: File, isPublic: boolean = false) => {
   const fileName = `${folder}/${uploadData}.${extension}`
   const { data, error } = await supabase.storage.from('exercises').upload(fileName, file)
   if (error) {
+    //@ts-ignore
     StorageErrorMessage(error)
     return null
   } else {

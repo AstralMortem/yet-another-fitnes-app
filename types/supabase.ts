@@ -149,7 +149,7 @@ export type Database = {
           },
         ]
       }
-      muscle_excercise: {
+      muscle_exercise: {
         Row: {
           created_at: string
           exercise_id: string
