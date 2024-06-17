@@ -8,7 +8,15 @@
                 </div>
                 <div class="flex flex-col bg-slate-800 p-4 rounded-lg gap-4 w-full md:w-full h-full">
                     <div class="flex flex-row justify-between items-center">
-                        <p class="text-5xl">{{ exercise.title }}</p>
+                        <div class="flex flex-row gap-2 items-center justify-start">
+                            <p class="text-5xl">{{ exercise.title }}</p>
+                            <!-- v-if="isSuperUser || exercise.author_id == userId" -->
+                            <div class="flex flex-row gap-1 justify-center items-center" >
+                                <UButton icon="i-ph-pencil" variant="soft" color="green" />
+                                <UButton icon="i-ph-trash" variant="soft" color="red" @click="openDeleteModal(exercise.id, exercise.title)"/>
+                            </div>
+                        </div>
+                        
                         <div class="flex flex-row justify-center items-center gap-1">
                             <p>{{ exercise.level }}/5</p>
                             <UILevelMeter v-model="exercise.level" />
@@ -25,7 +33,8 @@
                 </div>
             </div>
             <p class="text-xl md:text-3xl text-slate-400">Muscles</p>
-            <div class="flex flex-col-reverse md:flex-row gap-6 justify-between items-center md:items-start bg-slate-800 p-4 rounded-lg">
+            <UILoader v-if="muscleStatus == 'pending'"/>
+            <div class="flex flex-col-reverse md:flex-row gap-6 justify-between items-center md:items-start bg-slate-800 p-4 rounded-lg" v-else>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:md-grid-cols-4 gap-6">
                     <div v-for="(muscle, idx) in muscles" class="flex flex-row gap-2">
                         <UIImage :src="muscle.muscles.image" bucket-name="exercises" :height="90" :width="90"
@@ -50,11 +59,11 @@
                     <p class="text-2xl">{{ equipment.title }}</p>
                 </div>
             </div>
-            <p class="text-xl md:text-3xl text-slate-400">Exercise Type</p>
-            <div class="flex flex-col gap-6 bg-slate-800 p-4 rounded-lg justify-start items-start">
+            <p class="text-xl md:text-3xl text-slate-400" v-if="exerciseTypeObject">Exercise Type</p>
+            <div class="flex flex-col gap-6 bg-slate-800 p-4 rounded-lg justify-start items-start" v-if="exerciseTypeObject">
                 <div class="flex flex-row gap-2 justify-center items-center w-fit">
                     <div class="p-1 flex justify-center items-center ring-2 ring-primary rounded-md">
-                        <UIcon :name="exerciseTypeObject?.icon" class="text-2xl" />
+                        <UIcon :name="exerciseTypeObject.icon" class="text-2xl"  />
                     </div>
                     <p class="text-xl">{{ exerciseTypeObject?.title }}</p>
                 </div>
@@ -67,9 +76,14 @@
 import { type ExerciseSelect } from '~/types/exercise';
 import { Doughnut } from 'vue-chartjs'
 import type { ChartData } from 'chart.js';
+import { UIDeleteModal } from '#components';
+
+const modal = useModal()
 const supabase = useSupabaseApi()
 const route = useRoute()
 const exerciseTypeStore = useExerciseTypeStore()
+const profileStore = useProfileStore()
+const {isSuperUser, userId} = storeToRefs(profileStore)
 
 const { data: exercise, status } = await useAsyncData('fetch-exercise-detail', async () => {
     const { data, error } = await supabase.from('exercise').select('*, equipment(*)').eq('id', route.params.exercise_id).limit(1).single()
@@ -116,6 +130,20 @@ const muscleChartOptions = ref({
 
 const exerciseTypeObject = computed(() => exerciseTypeStore.dataList.find(x => x.label == exercise.value?.type))
 
+function openDeleteModal (id:string, title: string){
+    modal.open(UIDeleteModal,{
+        'id': id,
+        'tableName': 'exercise',
+        'title': title,
+        onClose() {
+            modal.close()
+        },
+        onSuccess(){
+            modal.close()
+            navigateTo('/exercises')
+        }
+    })
+}
 </script>
 
 <style></style>

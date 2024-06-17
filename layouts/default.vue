@@ -6,6 +6,8 @@
     </UContainer>
     
     <UNotifications/>
+    <UModals/>
+
   </div>
 </template>
 

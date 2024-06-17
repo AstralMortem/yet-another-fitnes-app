@@ -38,6 +38,7 @@ export const useProfileStore = defineStore({
   },
   getters:{
     isAuthenticated: (state) => !state.userProfile,
-    isSuperUser: (state) => !!state.userProfile.is_superuser
+    isSuperUser: (state) => !!state.userProfile.is_superuser,
+    userId: (state) => state.userProfile.id
   }
 })
