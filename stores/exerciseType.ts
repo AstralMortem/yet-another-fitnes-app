@@ -26,8 +26,7 @@ export const useExerciseTypeStore = defineStore({
         return "i-ph-barbell"
       }else if(name=="cardio_duration" || name=="cardio_lenght"){
         return "i-ph-person-simple-run"
-      }
-      else{
+      }else{
         return "i-ph-person-simple-tai-chi"
       }
     }

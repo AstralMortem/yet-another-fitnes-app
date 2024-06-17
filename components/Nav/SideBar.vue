@@ -14,6 +14,10 @@ const links = [{
   label: 'Statistic',
   icon: 'i-ph-chart-bar'
 },{
+  to: '/routines',
+  label: "Routines",
+  icon: 'i-ph-rows-plus-bottom'
+},{
   to: '/exercises',
   label: 'Exercises',
   icon: 'i-ph-barbell'
