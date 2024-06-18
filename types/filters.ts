@@ -40,3 +40,7 @@ export interface IStoreFilter {
   icon?: string
   title: string
 }
+
+export interface IStoreExercisesType extends IStoreFilter {
+  label: string
+}

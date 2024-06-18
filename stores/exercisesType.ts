@@ -1,12 +1,10 @@
 import { defineStore } from 'pinia'
-import { array } from 'zod'
-import type { IStoreFilter } from '~/types/filters'
+import type { IStoreExercisesType } from '~/types/filters'
 
 export const useExercisesTypeStore = defineStore({
   id: 'exercisesTypeStore',
   state: () => ({
-    dataList: [] as IStoreFilter[],
-    array: [] as string[],
+    dataList: [] as IStoreExercisesType[],
     currentID: Number(-1),
     pending: false,
   }),
@@ -14,16 +12,18 @@ export const useExercisesTypeStore = defineStore({
     async fetchTable() {
       this.dataList = []
       this.pending = true
-      this.array = convertEnum('ExerciseTypeEnum')
+      const array = convertEnum('ExerciseTypeEnum')
       this.dataList.unshift({
         id: -1,
         title: 'All types',
+        label: '',
       })
-      this.array.forEach((item, idx) => {
+      array.forEach((item, idx) => {
         this.dataList.push({
           id: idx,
           title: this.convertTitle(item),
           icon: this.convertIcon(item),
+          label: item,
         })
       })
 
@@ -46,12 +46,7 @@ export const useExercisesTypeStore = defineStore({
   },
   getters: {
     getSelectedItem: state => state.dataList.find(x => x.id === state.currentID),
-    getSelectedItemLabel: (state) => {
-      const title = state.dataList.find(x => x.id === state.currentID && state.currentID !== -1)?.title
-      if (title) {
-        return title.split(' ').map(x => x.toLowerCase()).join('_')
-      }
-    },
+    getSelectedItemLabel: state => state.dataList.find(x => x.id === state.currentID)?.label,
   },
 
 })

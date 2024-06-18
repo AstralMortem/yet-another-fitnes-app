@@ -28,7 +28,8 @@ function openAddForm() {
     onDiscard() {
       slideover.close()
     },
-    onSuccess() {
+    async onSuccess() {
+      await exercisesStore.fetchTable(false, true)
       slideover.close()
     },
   })

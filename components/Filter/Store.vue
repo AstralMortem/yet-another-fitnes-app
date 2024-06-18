@@ -17,7 +17,6 @@ const props = defineProps({
   icon: {
     type: String,
     default: 'i-ph-record',
-    required: true,
   },
 })
 
