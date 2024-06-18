@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 const equipmentStore = useEquipmentsStore()
 const musclesStore = useMusclesStore()
+const exerciseTypeStore = useExercisesTypeStore()
 </script>
 
 <template>
@@ -9,6 +10,7 @@ const musclesStore = useMusclesStore()
       <div class="flex flex-row justify-evenly items-center gap-2 ">
         <FilterStore :store="equipmentStore" title="Equipments" />
         <FilterStore :store="musclesStore" title="Muscles" />
+        <FilterStore :store="exerciseTypeStore" title="Types" />
       </div>
       <div class="flex flex-row justify-evenly items-center gap-2">
         <UButton icon="i-ph-plus" />

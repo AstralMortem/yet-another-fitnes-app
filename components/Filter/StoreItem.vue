@@ -25,10 +25,10 @@ function select(data: IStoreFilter) {
 <template>
   <UModal>
     <div class="flex flex-col w-full h-full gap-2 p-1 overflow-y-auto">
-      <UIResponsiveCard v-for="data in items" :key="data.id" @click="select(data)" :bg-color="currentItem.id == data.id?'primary':'slate'">
+      <UIResponsiveCard v-for="data in items" :key="data.id" :bg-color="currentItem.id === data.id ? 'primary' : 'slate'" @click="select(data)">
         <div class="flex flex-row justify-start items-center gap-2 w-full">
           <UIImage v-if="data.image" :src="data.image" :bucket="data.imageBucket" />
-          <UIcon v-if="data.icon" :name="data.icon" />
+          <UIP v-if="data.icon"><UIcon :name="data.icon" :dynamic="true" /></UIP>
           <UIP>{{ data.title }}</UIP>
         </div>
         <UIP>

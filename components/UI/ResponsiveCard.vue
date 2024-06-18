@@ -5,7 +5,6 @@ defineProps({
   bgColor: {
     type: [String],
     default: 'slate',
-    required: true,
   },
 })
 

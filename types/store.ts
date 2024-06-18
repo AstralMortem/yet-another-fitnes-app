@@ -1,1 +1,1 @@
-export type StoreID = 'equipmentsStore' | 'musclesStore' | 'userProfileStore'
+export type StoreID = 'equipmentsStore' | 'musclesStore' | 'userProfileStore' | 'exercisesTypeStore'
