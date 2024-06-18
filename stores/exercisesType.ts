@@ -12,6 +12,7 @@ export const useExercisesTypeStore = defineStore({
   }),
   actions: {
     async fetchTable() {
+      this.dataList = []
       this.pending = true
       this.array = convertEnum('ExerciseTypeEnum')
       this.dataList.unshift({

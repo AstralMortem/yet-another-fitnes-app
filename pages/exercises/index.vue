@@ -27,7 +27,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex w-full flex-col justify-start items-start">
+  <div class="flex w-full flex-col justify-start items-start gap-4">
     <div class="flex flex-col gap-2 md:flex-row md:justify-between md:items-center w-full">
       <div class="flex flex-row justify-evenly items-center gap-2 ">
         <FilterStore :store="equipmentStore" title="Equipments" />
@@ -39,11 +39,9 @@ onMounted(async () => {
         <UInput v-model="search" class="lg:min-w-[400px]" :ui="{ base: 'md:h-14' }" />
       </div>
     </div>
-    <div v-infinite-scroll="onLoadMore" class="flex flex-col w-full h-full justify-start items-start overflow-y-auto p-1">
+    <div v-infinite-scroll="onLoadMore" class="flex flex-col w-full h-full justify-start items-start overflow-y-auto pr-1">
       <UILoader v-if="pending" />
-      <div v-for="data in exercises" :key="data.id">
-        <UIP>{{ data }}</UIP>
-      </div>
+      <ExercisesItem v-for="data in exercises" :key="data.id" :data="data" />
     </div>
   </div>
 </template>

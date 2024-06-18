@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
 import type { IFetchFilter, IFetchPagination } from '~/types/filters'
+import type { ExerciseSelect } from '~/types/models'
 import type { Tables } from '~/types/supabase'
 
 export const useExercisesStore = defineStore({
   id: 'exercisesStore',
   state: () => ({
-    dataList: [] as Tables<'exercise'>[],
+    dataList: [] as ExerciseSelect[],
     page: 1,
     offset: 10,
     pending: false,
@@ -17,7 +18,7 @@ export const useExercisesStore = defineStore({
       const supabase = useSupabaseApi()
       if (reset) {
         this.page = 1
-        this.dataList = [] as Tables<'exercise'>[]
+        this.dataList = [] as ExerciseSelect[]
         this.reachedEnd = false
       }
 
@@ -30,7 +31,7 @@ export const useExercisesStore = defineStore({
       }
       if (filter) {
         const exerciseTypeStore = useExercisesTypeStore()
-        if (exerciseTypeStore.currentID !== -1) {
+        if (exerciseTypeStore.getSelectedItemLabel) {
           statement.eq('type', exerciseTypeStore.getSelectedItemLabel)
         }
         const musclesStore = useMusclesStore()
@@ -49,7 +50,7 @@ export const useExercisesStore = defineStore({
       }
 
       this.pending = true
-      const { data, error } = await statement.range((this.page - 1) * this.offset, this.page * this.offset)
+      const { data, error } = await statement.range((this.page - 1) * this.offset, this.page * this.offset).returns<ExerciseSelect[]>()
       this.pending = false
 
       if (error) {
