@@ -1,0 +1,23 @@
+<script lang="ts" setup>
+const equipmentStore = useEquipmentsStore()
+const musclesStore = useMusclesStore()
+</script>
+
+<template>
+  <div class="flex w-full flex-col justify-start items-start">
+    <div class="flex flex-col gap-2 md:flex-row md:justify-between md:items-center w-full">
+      <div class="flex flex-row justify-evenly items-center gap-2 ">
+        <FilterStore :store="equipmentStore" title="Equipments" />
+        <FilterStore :store="musclesStore" title="Muscles" />
+      </div>
+      <div class="flex flex-row justify-evenly items-center gap-2">
+        <UButton icon="i-ph-plus" />
+        <UInput class="lg:min-w-[400px]" :ui="{ base: 'md:h-14' }" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style>
+
+</style>

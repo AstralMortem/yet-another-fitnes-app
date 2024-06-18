@@ -5,7 +5,7 @@ export const useMusclesStore = defineStore({
   id: 'musclesStore',
   state: () => ({
     dataList: [] as Tables<'muscles'>[],
-    currentID: Number(),
+    currentID: Number(-1),
     pending: false,
   }),
   actions: {

@@ -5,7 +5,7 @@ export const useEquipmentsStore = defineStore({
   id: 'equipmentsStore',
   state: () => ({
     dataList: [] as Tables<'equipment'>[],
-    currentID: Number(),
+    currentID: Number(-1),
     pending: true,
   }),
   actions: {
