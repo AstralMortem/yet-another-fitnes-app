@@ -1,7 +1,24 @@
 <script lang="ts" setup>
+import { vInfiniteScroll } from '@vueuse/components'
+import type { IFetchFilter } from '~/types/filters'
+
 const equipmentStore = useEquipmentsStore()
 const musclesStore = useMusclesStore()
-const exerciseTypeStore = useExercisesTypeStore()
+const exercisesTypeStore = useExercisesTypeStore()
+const exercisesStore = useExercisesStore()
+const { dataList: exercises, pending, page, search } = storeToRefs(exercisesStore)
+
+watch(search, async () => {
+  await exercisesStore.fetchTable(true, true)
+})
+
+function onLoadMore() {
+  page.value++
+}
+
+onMounted(async () => {
+  await exercisesStore.fetchTable()
+})
 </script>
 
 <template>
@@ -10,14 +27,19 @@ const exerciseTypeStore = useExercisesTypeStore()
       <div class="flex flex-row justify-evenly items-center gap-2 ">
         <FilterStore :store="equipmentStore" title="Equipments" />
         <FilterStore :store="musclesStore" title="Muscles" />
-        <FilterStore :store="exerciseTypeStore" title="Types" />
+        <FilterStore :store="exercisesTypeStore" title="Types" />
       </div>
       <div class="flex flex-row justify-evenly items-center gap-2">
         <UButton icon="i-ph-plus" />
-        <UInput class="lg:min-w-[400px]" :ui="{ base: 'md:h-14' }" />
+        <UInput v-model="search" class="lg:min-w-[400px]" :ui="{ base: 'md:h-14' }" />
       </div>
     </div>
-    <div class="flex flex-col w-full h-full justify-start items-start overflow-y-auto p-1" />
+    <div v-infinite-scroll="onLoadMore" class="flex flex-col w-full h-full justify-start items-start overflow-y-auto p-1">
+      <UILoader v-if="pending" />
+      <div v-for="data in exercises" :key="data.id">
+        <UIP>{{ data }}</UIP>
+      </div>
+    </div>
   </div>
 </template>
 
