@@ -11,12 +11,14 @@ export const useUserProfileStore = defineStore({
     async fetchProfile() {
       const supabaseUser = useSupabaseUser()
       if (supabaseUser.value && !this.isAuthenticated) {
-        this.pending = true
-        const data = await supabaseSimpleFetch('profile', '*', [{ column: 'id', op: 'eq', value: supabaseUser.value.id }], undefined, true)
-        this.pending = false
-        if (data) {
-          this.userProfile = data as Tables<'profile'>
+        try {
+          const data = await supabaseFetch('profile', '*', true, [{ column: 'id', op: 'eq', value: supabaseUser.value.id }])
+          this.userProfile = data
         }
+        catch (error) {
+          console.error(error)
+        }
+        this.pending = false
       }
     },
   },

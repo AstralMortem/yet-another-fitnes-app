@@ -13,6 +13,12 @@ export const useEquipmentsStore = defineStore({
       this.pending = true
       try {
         const data = await supabaseFetch('equipment', '*', false)
+        data.unshift({
+          id: -1,
+          title: 'All equipments',
+          created_at: '',
+          image: null,
+        })
         this.dataList = data
       }
       catch (error) {

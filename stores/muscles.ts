@@ -12,6 +12,12 @@ export const useMusclesStore = defineStore({
     async fetchTable() {
       try {
         const data = await supabaseFetch('muscles', '*', false)
+        data.unshift({
+          id: -1,
+          title: 'All muscles',
+          created_at: '',
+          image: null,
+        })
         this.dataList = data
       }
       catch (error) {
@@ -20,6 +26,6 @@ export const useMusclesStore = defineStore({
     },
   },
   getters: {
-    getCurentItem: state => state.dataList.find(x => x.id === state.currentID),
+    getSelectedItem: state => state.dataList.find(x => x.id === state.currentID),
   },
 })

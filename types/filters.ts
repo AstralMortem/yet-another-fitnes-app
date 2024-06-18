@@ -32,3 +32,11 @@ export interface IFetchPagination {
   page: number
   offset: number
 }
+
+export interface IStoreFilter {
+  id: number | string
+  image?: string
+  imageBucket?: string
+  icon?: string
+  title: string
+}
