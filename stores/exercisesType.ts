@@ -25,6 +25,7 @@ export const useExercisesTypeStore = defineStore({
           icon: this.convertIcon(item),
         })
       })
+
       this.pending = false
     },
     convertTitle(title: string) {
@@ -41,14 +42,15 @@ export const useExercisesTypeStore = defineStore({
         return 'i-ph-person-simple-tai-chi'
       }
     },
-    getTypeById(id: number) {
-      const idx = this.dataList.findIndex(x => x.id === id)
-      return this.array[idx + 1]
-    },
   },
   getters: {
     getSelectedItem: state => state.dataList.find(x => x.id === state.currentID),
-    getSelectedItemLabel: state => state.array[state.dataList.findIndex(x => x.id === state.currentID) + 1],
+    getSelectedItemLabel: (state) => {
+      const title = state.dataList.find(x => x.id === state.currentID && state.currentID !== -1)?.title
+      if (title) {
+        return title.split(' ').map(x => x.toLowerCase()).join('_')
+      }
+    },
   },
 
 })

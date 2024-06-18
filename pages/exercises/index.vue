@@ -8,7 +8,12 @@ const exercisesTypeStore = useExercisesTypeStore()
 const exercisesStore = useExercisesStore()
 const { dataList: exercises, pending, page, search } = storeToRefs(exercisesStore)
 
-watch(search, async () => {
+watch([
+  storeToRefs(equipmentStore).currentID,
+  storeToRefs(musclesStore).currentID,
+  storeToRefs(exercisesTypeStore).currentID,
+  search,
+], async () => {
   await exercisesStore.fetchTable(true, true)
 })
 

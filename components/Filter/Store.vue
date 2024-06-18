@@ -37,7 +37,9 @@ function showFilterModal() {
 }
 
 onMounted(async () => {
-  await props.store.fetchTable()
+  if (!dataList.length) {
+    await props.store.fetchTable()
+  }
 })
 </script>
 
@@ -47,7 +49,9 @@ onMounted(async () => {
     <UIResponsiveCard v-else class="w-fit" :bg-color="currentID !== -1 ? 'primary' : 'slate'">
       <div v-if="getSelectedItem && currentID !== -1" class="flex flex-row justify-between items-center gap-2 w-full">
         <UButton icon="i-ph-x" @click="currentID = -1" />
-        <UIP class="flex-1 truncate w-fit" @click="showFilterModal">{{ getSelectedItem.title }}</UIP>
+        <UIP class="flex-1 truncate w-fit" @click="showFilterModal">
+          {{ getSelectedItem.title }}
+        </UIP>
       </div>
       <div v-else class="flex flex-row justify-between items-center gap-2 w-full" @click="showFilterModal">
         <UIP><UIcon :name="$props.icon" /></UIP>
