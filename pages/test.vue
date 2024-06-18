@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ExerciseMuscleRelSelect/>
+    
   </div>
 </template>
 

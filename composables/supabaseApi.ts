@@ -1,5 +1,5 @@
-import type { Database } from "~/types/supabase"
+import type { Database } from '~/types/supabase'
 
-export const useSupabaseApi = () => {
+export function useSupabaseApi() {
   return useSupabaseClient<Database>()
 }

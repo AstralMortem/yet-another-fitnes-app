@@ -1,32 +1,33 @@
+<script lang="ts" setup>
+const profileStore = useUserProfileStore()
+onMounted(async () => {
+  await profileStore.fetchProfile()
+})
+</script>
+
 <template>
   <div class="w-screen h-screen flex flex-row">
-    <NavSideBar/>
     <UContainer class="w-full p-4 mb-20 lg:mb-0">
       <slot />
     </UContainer>
-    
-    <UNotifications/>
-    <UModals/>
 
+    <UNotifications>
+      <template #title="{ title }">
+        <p class="text-lg">
+          {{ title }}
+        </p>
+      </template>
+      <template #description="{ description }">
+        <UTooltip :text="description.split('||')[1]" class="cursor-pointer">
+          <span class="text-underline">{{ description.split('||')[0] }}</span>
+        </UTooltip>
+      </template>
+    </UNotifications>
+    <UModals />
   </div>
 </template>
 
-<script lang="ts" setup>
-const profile = useProfileStore()
-const supabaseUser = useSupabaseUser()
-
-onMounted(async ()=>{
-  if(supabaseUser.value && !profile.isAuthenticated){ //check user profile evry page update
-  await profile.fetchProfile(supabaseUser.value.id)
-}
-})
-
-
-
-</script>
-
 <style>
-
 ::-webkit-scrollbar {
   @apply w-1 rounded-lg
 }
@@ -45,5 +46,4 @@ onMounted(async ()=>{
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-primary-800
 }
-
 </style>
