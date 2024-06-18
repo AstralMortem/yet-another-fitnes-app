@@ -49,10 +49,10 @@ async function insertExercise(event: FormSubmitEvent<Schema>) {
   formState.equipments?.forEach(x => equipmentsArray.push({ equipment_id: x, exercise_id: null }))
   delete formState.equipments
 
-  const data = await supabaseInsert('exercise', formState, [], true)
+  const data = await supabaseInsert('exercise', formState, true)
   if (data) {
-    musclesArray?.forEach(x => x.exercise_id = data[0].id)
-    equipmentsArray?.forEach(x => x.exercise_id = data[0].id)
+    musclesArray?.forEach(x => x.exercise_id = data.id)
+    equipmentsArray?.forEach(x => x.exercise_id = data.id)
 
     await supabaseInsert('muscle_exercise', musclesArray)
     await supabaseInsert('equipment_exercise', equipmentsArray)
