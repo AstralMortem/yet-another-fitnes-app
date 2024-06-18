@@ -1,22 +1,32 @@
 <script lang="ts" setup>
-import type { theme } from '#tailwind-config'
-
-defineProps({
+const props = defineProps({
   bgColor: {
-    type: [String],
+    type: String,
     default: 'slate',
+  },
+  title: {
+    type: String,
+  },
+  block: {
+    type: Boolean,
+    default: false,
   },
 })
 
 const colorVariant = ref({
-  primary: 'bg-primary-900 hover:bg-primary-700',
-  slate: 'bg-slate-900 hover:bg-slate-700',
+  primary: `bg-primary-900 ${props.block ? '' : 'hover:bg-primary-700'}`,
+  slate: `bg-slate-900  ${props.block ? '' : 'hover:hover:bg-slate-700'}`,
 })
 </script>
 
 <template>
-  <div class="flex flex-row justify-betweeen items-center rounded-lg px-2.5 py-2 md:px-4 md:py-4 cursor-pointer" :class="colorVariant[$props.bgColor]">
-    <slot />
+  <div class="relative">
+    <UIP v-if="$props.title" class="absolute -top-3 md:-top-4 lg:-top-5 left-5 bg-slate-900 px-3 z-1 rounded-xl">
+      {{ $props.title }}
+    </UIP>
+    <div class="flex flex-row justify-start items-start rounded-lg px-2.5 py-2 md:px-4 md:py-4 h-full" :class="[colorVariant[$props.bgColor], props.block ? '' : 'cursor-pointer']">
+      <slot />
+    </div>
   </div>
 </template>
 
