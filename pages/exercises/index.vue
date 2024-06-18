@@ -17,6 +17,7 @@ const exerciseTypeStore = useExercisesTypeStore()
         <UInput class="lg:min-w-[400px]" :ui="{ base: 'md:h-14' }" />
       </div>
     </div>
+    <div class="flex flex-col w-full h-full justify-start items-start overflow-y-auto p-1" />
   </div>
 </template>
 
