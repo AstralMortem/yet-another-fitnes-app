@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { vInfiniteScroll } from '@vueuse/components'
-import type { IFetchFilter } from '~/types/filters'
+import { ExercisesAddForm } from '#components'
 
+const slideover = useSlideover()
 const equipmentStore = useEquipmentsStore()
 const musclesStore = useMusclesStore()
 const exercisesTypeStore = useExercisesTypeStore()
@@ -17,8 +18,20 @@ watch([
   await exercisesStore.fetchTable(true, true)
 })
 
-function onLoadMore() {
+async function onLoadMore() {
   page.value++
+  await exercisesStore.fetchTable(true)
+}
+
+function openAddForm() {
+  slideover.open(ExercisesAddForm, {
+    onDiscard() {
+      slideover.close()
+    },
+    onSuccess() {
+      slideover.close()
+    },
+  })
 }
 
 onMounted(async () => {
@@ -35,7 +48,7 @@ onMounted(async () => {
         <FilterStore :store="exercisesTypeStore" title="Types" />
       </div>
       <div class="flex flex-row justify-evenly items-center gap-2">
-        <UButton icon="i-ph-plus" />
+        <UButton icon="i-ph-plus" @click="openAddForm" />
         <UInput v-model="search" class="lg:min-w-[400px]" :ui="{ base: 'md:h-14' }" />
       </div>
     </div>

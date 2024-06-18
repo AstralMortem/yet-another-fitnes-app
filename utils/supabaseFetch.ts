@@ -1,6 +1,5 @@
-import { boolean } from 'zod'
 import type { IFetchFilter, IFetchPagination } from '~/types/filters'
-import type { PublicSchema, Tables } from '~/types/supabase'
+import type { PublicSchema } from '~/types/supabase'
 
 type TableName = keyof PublicSchema['Tables']
 type Table<T extends TableName> = PublicSchema['Tables'][T]['Row']

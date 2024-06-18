@@ -24,6 +24,7 @@ onMounted(async () => {
       </template>
     </UNotifications>
     <UModals />
+    <USlideovers />
   </div>
 </template>
 
