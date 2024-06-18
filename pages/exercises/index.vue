@@ -39,7 +39,7 @@ onMounted(async () => {
         <UInput v-model="search" class="lg:min-w-[400px]" :ui="{ base: 'md:h-14' }" />
       </div>
     </div>
-    <div v-infinite-scroll="onLoadMore" class="flex flex-col w-full h-full justify-start items-start overflow-y-auto pr-1">
+    <div v-infinite-scroll="onLoadMore" class="flex flex-col w-full h-full justify-start items-start overflow-y-auto pr-1 gap-4">
       <UILoader v-if="pending" />
       <ExercisesItem v-for="data in exercises" :key="data.id" :data="data" />
     </div>

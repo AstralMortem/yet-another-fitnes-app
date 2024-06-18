@@ -10,6 +10,7 @@ export const useMusclesStore = defineStore({
   }),
   actions: {
     async fetchTable() {
+      this.pending = true
       try {
         const data = await supabaseFetch('muscles', '*', false)
         data.unshift({
@@ -23,6 +24,7 @@ export const useMusclesStore = defineStore({
       catch (error) {
         console.error(error)
       }
+      this.pending = false
     },
   },
   getters: {

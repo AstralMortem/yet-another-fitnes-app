@@ -45,7 +45,7 @@ onMounted(async () => {
 
 <template>
   <div>
-    <UILoader v-if="pending" />
+    <SkeletonResponsiveCard v-if="pending" />
     <UIResponsiveCard v-else class="w-fit" :bg-color="currentID !== -1 ? 'primary' : 'slate'">
       <div v-if="getSelectedItem && currentID !== -1" class="flex flex-row justify-between items-center gap-2 w-full">
         <UButton icon="i-ph-x" @click="currentID = -1" />
