@@ -48,14 +48,14 @@ onMounted(async () => {
 <template>
   <UModal v-model="show">
     <UILoader v-if="pending" />
-    <div v-else class="flex flex-col justify-start items-start gap-2 p-2">
-      <UIResponsiveCard v-for="(data, idx) in dataList.slice(1)" :key="data.id" class="w-full flex flex-row justify-between" :bg-color="state[idx].muscle_id === data.id && state[idx].procent ? 'primary' : 'slate'">
-        <div class="flex flex-row gap-2 justify-start items-center">
+    <div v-else class="flex flex-col justify-start items-center gap-2 p-2 w-full">
+      <UIResponsiveCard v-for="(data, idx) in dataList.slice(1)" :key="data.id" class="flex flex-row justify-between items-center w-full" :bg-color="state[idx].muscle_id === data.id && state[idx].procent ? 'primary' : 'slate'">
+        <div class="flex flex-row gap-2 justify-start items-start w-full h-full">
           <UIImage :src="data.image" />
           <UIP>{{ data.title }}</UIP>
         </div>
-        <div class="flex flex-row gap-2 justify-start items-center">
-          <USelect v-model="state[idx].type" :options="['main', 'secondary']" />
+        <div class="flex flex-row gap-2 justify-end items-start w-full">
+          <USelectMenu v-model="state[idx].type" :options="['main', 'secondary']" />
           <UIRoundedProgress :model-value="state[idx].procent" :editable="true" @update:model-value="debounceCalcProgress($event, idx)" />
         </div>
       </UIResponsiveCard>

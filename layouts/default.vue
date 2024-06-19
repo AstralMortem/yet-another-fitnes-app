@@ -6,8 +6,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="w-screen h-screen overflow-x-hidden">
-    <UContainer>
+  <div class="w-screen h-screen overflow-x-hidden flex flex-row justify-start items-start">
+    <NavSideBar />
+    <UContainer class="w-full mt-4">
       <slot />
     </UContainer>
 

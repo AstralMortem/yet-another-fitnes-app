@@ -8,11 +8,11 @@ const props = defineProps({
   },
   height: {
     type: String,
-    default: 'h-12 md:h-20',
+    default: 'h-12 md:h-24',
   },
   width: {
     type: String,
-    default: 'w-12 md:w-20',
+    default: 'w-12 md:w-24',
   },
   bucketName: {
     type: String,

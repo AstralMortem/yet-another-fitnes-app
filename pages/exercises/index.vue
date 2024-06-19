@@ -43,14 +43,14 @@ onMounted(async () => {
 <template>
   <div class="flex w-full flex-col justify-start items-start gap-4">
     <div class="flex flex-col gap-2 md:flex-row md:justify-between md:items-center w-full">
-      <div class="flex flex-row justify-evenly items-center gap-2 ">
+      <div class="flex flex-row justify-between items-center gap-2 ">
         <FilterStore :store="equipmentStore" title="Equipments" />
         <FilterStore :store="musclesStore" title="Muscles" />
         <FilterStore :store="exercisesTypeStore" title="Types" />
       </div>
-      <div class="flex flex-row justify-evenly items-center gap-2">
-        <UButton icon="i-ph-plus" @click="openAddForm" />
-        <UInput v-model="search" class="lg:min-w-[400px]" :ui="{ base: 'md:h-14' }" />
+      <div class="flex flex-row justify-between items-center gap-2">
+        <UButton icon="i-ph-plus" @click="openAddForm" size="xl" />
+        <UInput v-model="search" class="lg:min-w-[400px] w-full" :ui="{ base: 'md:h-12' }" placeholder="Search exercise" size="xl" icon="i-ph-magnifying-glass" />
       </div>
     </div>
     <div v-infinite-scroll="onLoadMore" class="flex flex-col w-full h-full justify-start items-start overflow-y-auto pr-1 gap-4">
