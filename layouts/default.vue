@@ -6,8 +6,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="w-screen h-screen flex flex-row">
-    <UContainer class="w-full p-4 mb-20 lg:mb-0">
+  <div class="w-screen h-screen overflow-x-hidden">
+    <UContainer>
       <slot />
     </UContainer>
 

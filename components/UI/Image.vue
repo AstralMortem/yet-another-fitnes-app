@@ -7,12 +7,12 @@ const props = defineProps({
     required: true,
   },
   height: {
-    type: Number,
-    default: 96,
+    type: String,
+    default: 'h-12 md:h-20',
   },
   width: {
-    type: Number,
-    default: 96,
+    type: String,
+    default: 'w-12 md:w-20',
   },
   bucketName: {
     type: String,
@@ -54,10 +54,9 @@ onMounted(async () => {
   <img
     :src="path"
     class="rounded-lg ring-4"
+    :class="[props.height, props.width]"
     :style="{
-      'width': `${$props.width}px`,
-      'height': `${$props.height}px`,
-      '--tw-ring-color': $props.ringColor,
+      '--tw-ring-color': $props.ringColor ? $props.ringColor : theme.colors.purple['500'],
     }"
   >
 </template>

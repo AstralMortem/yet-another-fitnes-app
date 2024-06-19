@@ -46,10 +46,10 @@ const exerciseTypeObject = computed(() => useExercisesTypeStore().dataList.find(
 
 <template>
   <UILoader v-if="status === 'pending'" />
-  <div v-else-if="status === 'success' && exercise" class="flex flex-col h-full w-full overflow-y-auto gap-6">
+  <div v-else-if="status === 'success' && exercise" class="flex flex-col h-full w-full gap-6 md:gap-8">
     <div class="flex flex-col md:flex-row md:justify-between gap-6">
-      <UIResponsiveCard block class="min-w-[300px] items-center flex justify-center">
-        <UIImage :src="exercise?.image" :width="600" :height="400" />
+      <UIResponsiveCard block class=" items-center flex justify-center max-w-[400px] max-h-[400px]">
+        <UIImage :src="exercise?.image" width="min-w-[300px]" height="min-h-[300px]" />
       </UIResponsiveCard>
       <UIResponsiveCard block class="w-full">
         <div class="flex flex-col w-full gap-6 items-stretch">
@@ -67,14 +67,17 @@ const exerciseTypeObject = computed(() => useExercisesTypeStore().dataList.find(
       </UIResponsiveCard>
     </div>
     <UIResponsiveCard block title="Muscles" class="w-full">
-      <div class="flex flex-col-reverse md:flex-row md:justify-between w-full items-center md:items-start">
+      <div class="flex flex-col-reverse md:flex-row md:justify-between w-full items-center md:items-start gap-4">
         <div class="grid grid-cols-2 md:grid-cols-3 h-fit gap-3">
-          <UIResponsiveCard v-for="(muscle, idx) in muscles" :key="muscle.muscle_id">
+          <UIResponsiveCard v-for="(muscle, idx) in muscles" :key="muscle.muscle_id" :tooltip="muscle.type">
+            <template #tooltip-slot>
+              <UBadge :label="muscle.type" :color="muscle.type == 'main'? 'primary': 'green'"/>
+            </template>
             <div class="flex flex-row justify-start items-start gap-2">
-              <UIImage :src="muscle.muscles.image" />
+              <UIImage :src="muscle.muscles.image" :ring-color="muscleChartColor[idx]" />
               <div class="flex flex-col items-start">
-                <UIP>{{ muscle.muscles.title }}</UIP>
-                <UIP>{{ muscle.procent }}%</UIP>
+                <UIP>{{ muscle.muscles.title }} </UIP>
+                <UIP>{{ muscle.procent }}% </UIP>
               </div>
             </div>
           </UIResponsiveCard>
@@ -86,10 +89,10 @@ const exerciseTypeObject = computed(() => useExercisesTypeStore().dataList.find(
     </UIResponsiveCard>
     <div class="flex flex-col gap-6 md:flex-row">
       <UIResponsiveCard block class="w-full" title="Equipments">
-        <div class="flex flex-row justify-between items-center flex-wrap">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
           <UIResponsiveCard v-for="(equipment, idx) in exercise.equipment" :key="equipment.id" block>
             <div class="flex flex-row gap-2 justify-start items-start">
-              <UIImage :src="equipment.image" :height="60" :width="60" />
+              <UIImage :src="equipment.image" />
               <UIP class="text-2xl">
                 {{ equipment.title }}
               </UIP>
@@ -98,13 +101,12 @@ const exerciseTypeObject = computed(() => useExercisesTypeStore().dataList.find(
         </div>
       </UIResponsiveCard>
       <UIResponsiveCard v-if="exerciseTypeObject" block class="w-full" title="Exercise Type">
-        <UIResponsiveCard>
+        <UIResponsiveCard block>
           <div class="flex flex-row gap-2 justify-start items-center">
             <UIP><UIcon :name="exerciseTypeObject.icon" :dynamic="true" /></UIP>
             <UIP>{{ exerciseTypeObject.title }}</UIP>
           </div>
         </UIResponsiveCard>
-        
       </UIResponsiveCard>
     </div>
   </div>
