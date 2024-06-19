@@ -6,9 +6,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="w-screen h-screen overflow-x-hidden flex flex-row justify-start items-start">
+  <div class="w-screen h-screen  flex flex-row">
     <NavSideBar />
-    <UContainer class="w-full mt-4">
+    <UContainer class="w-full mt-4 mb-20 lg:mb-0">
       <slot />
     </UContainer>
 

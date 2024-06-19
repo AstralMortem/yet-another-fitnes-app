@@ -8,6 +8,10 @@ const props = defineProps({
     type: [String, Number],
     required: true,
   },
+  columnName:{
+    type:String,
+    default: 'id'
+  },
   title: {
     type: String,
     defaul: 'Record',
@@ -23,7 +27,7 @@ const emit = defineEmits(['success', 'close'])
 
 async function deleteRecord() {
   try {
-    const data = await supabaseDelete(props.tableName, [{ column: 'id', op: 'eq', value: props.id }])
+    const data = await supabaseDelete(props.tableName, [{ column: props.columnName, op: 'eq', value: props.id }])
     if (props.photoPath && props.bucket) {
       await supabaseDeletePhoto(props.bucket, props.photoPath)
     }
