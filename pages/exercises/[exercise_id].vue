@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import type { ChartData } from 'chart.js'
 import { Doughnut } from 'vue-chartjs'
-import { UIDeleteModal } from '#components'
+import { ExercisesEditForm, UIDeleteModal } from '#components'
+import type { ExerciseSelect } from '~/types/models';
 
 const userProfile = useUserProfileStore()
 const modal = useModal()
+const slideover = useSlideover()
 
 const route = useRoute()
 const { data: exercise, status } = await useAsyncData('fetch-exercise-detail', async () => {
@@ -69,6 +71,21 @@ async function deleteModal() {
     })
   }
 }
+
+const convertExercise = computed<ExerciseSelect>(()=>{
+  let ex = exercise.value
+  ex['muscles'] = muscles.value
+  return ex
+})
+
+function showEdit() {
+  slideover.open(ExercisesEditForm, {
+    value: convertExercise.value,
+    onDiscard() {
+      slideover.close()
+    },
+  })
+}
 </script>
 
 <template>
@@ -86,7 +103,7 @@ async function deleteModal() {
               <div class="flex flex-row justify-end items-center gap-4">
                 <div v-if="userProfile.isSuperUser || userProfile.userID === exercise.author_id" class="flex flex-row justify-center items-center gap-2">
                   <UButton variant="soft" color="red" icon="i-ph-trash" @click="deleteModal" />
-                  <UButton variant="soft" color="green" icon="i-ph-pencil" />
+                  <UButton variant="soft" color="green" icon="i-ph-pencil" @click="showEdit" />
                 </div>
                 <ExercisesLevelMeter v-model="exercise.level" />
               </div>

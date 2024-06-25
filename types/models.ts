@@ -1,4 +1,4 @@
-import type { Tables, TablesInsert } from './supabase'
+import type { Tables, TablesInsert, TablesUpdate } from './supabase'
 
 export interface ExerciseSelect extends Tables<'exercise'> {
   muscles: {
@@ -11,6 +11,11 @@ export interface ExerciseSelect extends Tables<'exercise'> {
 }
 
 export interface ExerciseInsert extends TablesInsert<'exercise'> {
-  equipments?: number[],
+  equipments?: number[]
   muscles?: Tables<'muscle_exercise'>[]
+}
+
+export interface ExerciseUpdate extends TablesUpdate<'exercise'> {
+  equipments?: number[]
+  muscles?: TablesUpdate<'muscle_exercise'>[]
 }
